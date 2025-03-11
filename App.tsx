@@ -50,7 +50,7 @@ const BottomTabs = () => {
           headerRight: () => <TouchableOpacity
           style={{
             padding: 10,
-            backgroundColor: "red",
+            backgroundColor: "lightblue",
             borderRadius: 5,
             marginRight: 10,
           }}
@@ -67,7 +67,7 @@ const BottomTabs = () => {
           headerRight: () => <TouchableOpacity
           style={{
             padding: 10,
-            backgroundColor: "red",
+            backgroundColor: "lightblue",
             borderRadius: 5,
             marginRight: 10,
           }}
