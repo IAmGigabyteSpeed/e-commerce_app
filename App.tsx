@@ -1,14 +1,18 @@
 import { TouchableOpacity, Text } from "react-native";
-import { AuthProvider, useAuth } from './app/context/AuthContext';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './app/screens/Home';
-import Login from './app/screens/Login';
-import Register from './app/screens/Register';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Cart from './app/screens/Cart';
-import Transactions from './app/screens/Transactions';
+import { AuthProvider, useAuth } from "./app/context/AuthContext";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./app/screens/Home";
+import Login from "./app/screens/Login";
+import Register from "./app/screens/Register";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Cart from "./app/screens/Cart";
+import Transactions from "./app/screens/Transactions";
 import Payment from "./app/screens/Payment";
+import Transaction from "./app/screens/Transaction";
+import Categories from "./app/screens/Categories";
+import Product from "./app/screens/Product";
+import Products from "./app/screens/Products";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,51 +34,65 @@ const BottomTabs = () => {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Home" component={Home} options={{ headerRight: () => <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: "lightblue",
-            borderRadius: 5,
-            marginRight: 10,
-          }}
-          onPress={onLogout}
-        >
-          <Text>Sign Out</Text>
-        </TouchableOpacity>,
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerRight: () => (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "lightblue",
+                borderRadius: 5,
+                marginRight: 10,
+              }}
+              onPress={onLogout}
+            >
+              <Text>Sign Out</Text>
+            </TouchableOpacity>
+          ),
         }}
       />
       <Tab.Screen
         name="Cart"
         component={Cart}
         options={{
-          headerRight: () => <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: "lightblue",
-            borderRadius: 5,
-            marginRight: 10,
-          }}
-          onPress={onLogout}
-        >
-          <Text style={{ color: "white", fontWeight: "bold" }}>Sign Out</Text>
-        </TouchableOpacity>,
+          headerRight: () => (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "lightblue",
+                borderRadius: 5,
+                marginRight: 10,
+              }}
+              onPress={onLogout}
+            >
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Sign Out
+              </Text>
+            </TouchableOpacity>
+          ),
         }}
       />
       <Tab.Screen
         name="Transactions"
         component={Transactions}
         options={{
-          headerRight: () => <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: "lightblue",
-            borderRadius: 5,
-            marginRight: 10,
-          }}
-          onPress={onLogout}
-        >
-          <Text style={{ color: "white", fontWeight: "bold" }}>Sign Out</Text>
-        </TouchableOpacity>,
+          headerRight: () => (
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                backgroundColor: "lightblue",
+                borderRadius: 5,
+                marginRight: 10,
+              }}
+              onPress={onLogout}
+            >
+              <Text style={{ color: "white", fontWeight: "bold" }}>
+                Sign Out
+              </Text>
+            </TouchableOpacity>
+          ),
         }}
       />
     </Tab.Navigator>
@@ -88,15 +106,32 @@ export const Layout = () => {
       <Stack.Navigator>
         {authState?.token !== null ? (
           <>
-          <Stack.Screen name="App" component={BottomTabs} options={{ headerShown: false }}  />
-          <Stack.Screen name="Payment" component={Payment} />
-        </>
-        
-        ) :(<>
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-          </>)}
+            <Stack.Screen
+              name="App"
+              component={BottomTabs}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Transaction" component={Transaction} />
+            <Stack.Screen name="Categories" component={Categories} />
+            <Stack.Screen name="Product" component={Product} />
+            <Stack.Screen name="Products" component={Products} />
+            <Stack.Screen name="Payment" component={Payment} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{ headerShown: false }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
