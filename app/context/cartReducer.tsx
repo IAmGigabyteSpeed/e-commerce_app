@@ -5,6 +5,7 @@ interface CartItem {
   name: string;
   price: number;
   quantity: number;
+  totalprice: number;
 }
 
 interface CartState {
@@ -26,6 +27,7 @@ export const cartSlice = createSlice({
       const item = state.Cartitems.find((item) => item.id === action.payload);
       if (item) {
         item.quantity += 1;
+        item.totalprice = item.price * item.quantity;
       }
     },
     reduceQuantity: (state, action: PayloadAction<string>) => {
@@ -33,6 +35,7 @@ export const cartSlice = createSlice({
       if (item) {
         if (item.quantity > 1) {
           item.quantity -= 1;
+          item.totalprice = item.price * item.quantity;
         } else {
           state.Cartitems = state.Cartitems.filter(
             (item) => item.id !== action.payload
