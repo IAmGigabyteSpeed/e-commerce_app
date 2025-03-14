@@ -11,10 +11,8 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from "axios";
 import { API_URL } from "../context/AuthContext";
 import { Link, useNavigation } from "@react-navigation/native";
-import {
-  NativeStackScreenProps,
-  NativeStackNavigationProp,
-} from "@react-navigation/native-stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../App";
 
 interface Category {
   _id: string;
@@ -33,12 +31,6 @@ interface Product {
   image: string;
   createdAt: string;
 }
-
-export type RootStackParamList = {
-  Transaction: { transactionId: number };
-  Product: { ProductId: number };
-  Products: { Category: string };
-};
 
 type Props = NativeStackNavigationProp<RootStackParamList>;
 
@@ -103,7 +95,7 @@ const Home = () => {
         </Pressable>
         <Pressable
           onPress={() =>
-            navigation.navigate("Product", { ProductId: 123981023 })
+            navigation.navigate("Product", { ProductId: "123981023" })
           }
         >
           <Text>Go to Product</Text>
@@ -161,5 +153,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     backgroundColor: "white",
+    cursor: "pointer",
   },
 });

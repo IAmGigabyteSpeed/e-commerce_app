@@ -16,8 +16,19 @@ import Products from "./app/screens/Products";
 import { Provider } from "react-redux";
 import { store } from "./app/context/reduxStore";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
+
+export type RootStackParamList = {
+  App: undefined;
+  Login: undefined;
+  Register: undefined;
+  Transaction: { transactionId: number };
+  Categories: undefined;
+  Product: { ProductId: string };
+  Products: { Category: string };
+  Payment: undefined;
+};
 
 export default function App() {
   return (
