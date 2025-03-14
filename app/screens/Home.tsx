@@ -43,6 +43,9 @@ export type RootStackParamList = {
 type Props = NativeStackNavigationProp<RootStackParamList>;
 
 const Home = () => {
+  const navigation = useNavigation<Props>();
+  const [search, setSearch] = useState<string>("");
+  const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const callProducts = async () => {
       const result = await axios.get(`${API_URL}/products/`);
@@ -51,8 +54,15 @@ const Home = () => {
     };
     callProducts();
   }, []);
-  const navigation = useNavigation<Props>();
-  const [products, setProducts] = useState<Product[]>([]);
+
+  const filteredProducts = useMemo(() => {
+    if (!search) return products;
+
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search, products]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Products</Text>
@@ -60,10 +70,12 @@ const Home = () => {
         keyboardType="web-search"
         style={styles.searchBar}
         placeholder="Search for Products"
+        value={search}
+        onChangeText={(e) => setSearch(e)}
       ></TextInput>
       <ScrollView style={styles.scrollView}>
         <View style={styles.gridContainer}>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Pressable
               style={styles.productBox}
               key={product._id}
