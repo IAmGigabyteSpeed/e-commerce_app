@@ -4,7 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  TouchableOpacity,
+  Pressable,
   Image,
 } from "react-native";
 import React, { useEffect, useState, useMemo, useRef } from "react";
@@ -62,41 +62,45 @@ const Home = () => {
         placeholder="Search for Products"
       ></TextInput>
       <ScrollView style={styles.scrollView}>
-        {products.map((product) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Product", { ProductId: product._id })
-            }
-          >
-            <View style={styles.productBox} key={product._id}>
-              <Image
-                source={{ uri: product.image }}
-                style={styles.productImage}
-              />
-              <Text>{product.name}</Text>
-              <Text>{product.price}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
-        <TouchableOpacity
+        <View style={styles.gridContainer}>
+          {products.map((product) => (
+            <Pressable
+              style={styles.productBox}
+              key={product._id}
+              onPress={() =>
+                navigation.navigate("Product", { ProductId: product._id })
+              }
+            >
+              <View>
+                <Image
+                  source={{ uri: product.image }}
+                  style={styles.productImage}
+                />
+                <Text>{product.name}</Text>
+                <Text>Rp.{product.price}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+        <Pressable
           onPress={() =>
             navigation.navigate("Transaction", { transactionId: 86 })
           }
         >
           <Text>Go to Transaction</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
           onPress={() =>
             navigation.navigate("Product", { ProductId: 123981023 })
           }
         >
           <Text>Go to Product</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
           onPress={() => navigation.navigate("Products", { Category: "Games" })}
         >
           <Text>Go to Products</Text>
-        </TouchableOpacity>
+        </Pressable>
         <Link screen="Categories">Testing Categories</Link>
       </ScrollView>
     </View>
@@ -129,12 +133,17 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     gap: 5,
   },
+  gridContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
   productImage: {
     height: 150,
     width: 150,
   },
   productBox: {
-    width: "50%",
+    width: "47.5%",
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 10,

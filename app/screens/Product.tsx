@@ -3,7 +3,7 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
+  Pressable,
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -56,7 +56,7 @@ const Product = ({ route, navigation }: Props) => {
       </ScrollView>
 
       <View style={styles.footer}>
-        <TouchableOpacity
+        <Pressable
           style={{
             padding: 10,
             backgroundColor: "lightblue",
@@ -70,7 +70,7 @@ const Product = ({ route, navigation }: Props) => {
           >
             + Add to Cart
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );
