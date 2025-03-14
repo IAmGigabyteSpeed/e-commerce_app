@@ -92,7 +92,6 @@ export const AuthProvider = ({ children }: any) => {
   const logout = async () => {
     axios.defaults.headers.common["Authorization"] = ``;
     await SecureStore.deleteItemAsync(JWT_Token);
-    await SecureStore.deleteItemAsync("cart-list");
     setAuthState({ token: null });
   };
 

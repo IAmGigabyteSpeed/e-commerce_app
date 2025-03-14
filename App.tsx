@@ -13,6 +13,8 @@ import Transaction from "./app/screens/Transaction";
 import Categories from "./app/screens/Categories";
 import Product from "./app/screens/Product";
 import Products from "./app/screens/Products";
+import { Provider } from "react-redux";
+import { store } from "./app/context/reduxStore";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -102,36 +104,38 @@ const BottomTabs = () => {
 export const Layout = () => {
   const { authState } = useAuth();
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {authState?.token !== null ? (
-          <>
-            <Stack.Screen
-              name="App"
-              component={BottomTabs}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Transaction" component={Transaction} />
-            <Stack.Screen name="Categories" component={Categories} />
-            <Stack.Screen name="Product" component={Product} />
-            <Stack.Screen name="Products" component={Products} />
-            <Stack.Screen name="Payment" component={Payment} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerShown: false }}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {authState?.token !== null ? (
+            <>
+              <Stack.Screen
+                name="App"
+                component={BottomTabs}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="Transaction" component={Transaction} />
+              <Stack.Screen name="Categories" component={Categories} />
+              <Stack.Screen name="Product" component={Product} />
+              <Stack.Screen name="Products" component={Products} />
+              <Stack.Screen name="Payment" component={Payment} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerShown: false }}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };

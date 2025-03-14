@@ -11,6 +11,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./Home";
 import axios from "axios";
 import { API_URL } from "../context/AuthContext";
+import * as SecureStore from "expo-secure-store";
 
 interface Category {
   _id: string;
