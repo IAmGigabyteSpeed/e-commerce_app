@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: any) => {
   const isTokenExpired = (token: string): boolean => {
     try {
       const decoded: JWTInfo = jwtDecode<JWTInfo>(token);
-      return decoded.exp < Date.now() / 1000;
+      return Date.now() >= decoded.exp * 1000;
     } catch (error) {
       console.error("Invalid token", error);
       return true;
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: any) => {
       if (!token) return null;
 
       const decoded: JWTInfo = jwtDecode<JWTInfo>(token);
-      if (decoded.exp < Date.now() / 1000) {
+      if (Date.now() >= decoded.exp * 1000) {
         logout();
         return null;
       }
@@ -106,9 +106,8 @@ export const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(JWT_Token);
-      console.log("Token", token);
       if (token) {
-        if (isTokenExpired(token)) {
+        if (!isTokenExpired(token)) {
           alert("Token expired, logging out...");
           return logout();
         }
