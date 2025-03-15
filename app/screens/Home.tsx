@@ -93,18 +93,6 @@ const Home = () => {
         >
           <Text>Go to Transaction</Text>
         </Pressable>
-        <Pressable
-          onPress={() =>
-            navigation.navigate("Product", { ProductId: "123981023" })
-          }
-        >
-          <Text>Go to Product</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => navigation.navigate("Products", { Category: "Games" })}
-        >
-          <Text>Go to Products</Text>
-        </Pressable>
         <Link screen="Categories">Testing Categories</Link>
       </ScrollView>
     </View>
