@@ -15,7 +15,7 @@ const Cart = () => {
   const cartItem = useSelector((state: RootState) => state.Cart.Cartitems);
   return (
     <View style={MainStyle.container}>
-      <ScrollView style={MainStyle.scrollView}>
+      <ScrollView contentContainerStyle={MainStyle.scrollView}>
         {cartItem.map((item, index) => (
           <View key={item.id} style={MainStyle.cartList}>
             <Text style={{ fontSize: 16, fontWeight: "bold" }}>

@@ -68,7 +68,7 @@ const Home = () => {
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
       <Link screen="Categories">or Search by Categories</Link>
-      <ScrollView style={Mainstyle.scrollView}>
+      <ScrollView contentContainerStyle={Mainstyle.scrollView}>
         <View style={Mainstyle.gridContainer}>
           {filteredProducts.map((product) => (
             <Pressable

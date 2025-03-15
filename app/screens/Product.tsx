@@ -75,7 +75,7 @@ const Product = ({ route }: Props) => {
 
   return (
     <View style={MainStyle.prodcontainer}>
-      <ScrollView style={MainStyle.prodscrollView}>
+      <ScrollView contentContainerStyle={MainStyle.prodscrollView}>
         <Image
           source={{ uri: product?.image }}
           style={MainStyle.productDetImage}

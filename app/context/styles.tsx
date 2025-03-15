@@ -67,6 +67,7 @@ const MainStyle = StyleSheet.create({
   prodscrollView: {
     padding: 32,
     paddingBottom: 80,
+    height: "auto",
   },
 
   footer: {
@@ -74,7 +75,7 @@ const MainStyle = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: "white",
-    padding: 15,
+    padding: 16,
     borderTopWidth: 1,
     borderColor: "#ddd",
   },

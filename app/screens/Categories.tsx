@@ -54,7 +54,7 @@ const Categories = () => {
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
-      <ScrollView style={MainStyle.scrollView}>
+      <ScrollView contentContainerStyle={MainStyle.scrollView}>
         <View style={MainStyle.gridContainer}>
           {filteredCategories?.map((category) => (
             <Pressable

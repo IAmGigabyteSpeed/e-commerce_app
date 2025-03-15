@@ -67,7 +67,7 @@ const Products = ({ route, navigation }: Props) => {
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
-      <ScrollView style={MainStyle.scrollView}>
+      <ScrollView contentContainerStyle={MainStyle.scrollView}>
         <View style={MainStyle.gridContainer}>
           {filteredProducts.map((product) => (
             <Pressable
