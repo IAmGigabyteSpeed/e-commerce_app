@@ -58,7 +58,7 @@ const Home = () => {
 
   return (
     <View style={Mainstyle.container}>
-      <Text style={Mainstyle.title}>Products</Text>
+      <Text style={Mainstyle.title}>Main Menu</Text>
       <TextInput
         keyboardType="web-search"
         style={Mainstyle.searchBar}
@@ -66,6 +66,7 @@ const Home = () => {
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
+      <Link screen="Categories">or Search by Categories</Link>
       <ScrollView style={Mainstyle.scrollView}>
         <View style={Mainstyle.gridContainer}>
           {filteredProducts.map((product) => (
@@ -82,7 +83,9 @@ const Home = () => {
                   style={Mainstyle.productImage}
                 />
                 <Text>{product.name}</Text>
-                <Text>Rp.{product.price}</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                  Rp.{product.price}
+                </Text>
               </View>
             </Pressable>
           ))}
@@ -94,7 +97,6 @@ const Home = () => {
         >
           <Text>Go to Transaction</Text>
         </Pressable>
-        <Link screen="Categories">Testing Categories</Link>
       </ScrollView>
     </View>
   );

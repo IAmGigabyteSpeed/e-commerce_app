@@ -41,11 +41,13 @@ const MainStyle = StyleSheet.create({
   },
 
   productTitle: {
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   productPrice: {
     fontSize: 24,
+    fontWeight: "bold",
   },
 
   productDescriptionTitle: {
