@@ -12,6 +12,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import axios from "axios";
 import { API_URL } from "../context/AuthContext";
+import MainStyle from "../context/styles";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Products">;
 
@@ -57,20 +58,20 @@ const Products = ({ route, navigation }: Props) => {
 
   const { Category } = route.params;
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Products</Text>
+    <View style={MainStyle.container}>
+      <Text style={MainStyle.title}>Products</Text>
       <TextInput
         keyboardType="web-search"
-        style={styles.searchBar}
+        style={MainStyle.searchBar}
         placeholder="Search for Products"
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.gridContainer}>
+      <ScrollView style={MainStyle.scrollView}>
+        <View style={MainStyle.gridContainer}>
           {filteredProducts.map((product) => (
             <Pressable
-              style={styles.productBox}
+              style={MainStyle.productBox}
               key={product._id}
               onPress={() =>
                 navigation.navigate("Product", { ProductId: product._id })
@@ -79,7 +80,7 @@ const Products = ({ route, navigation }: Props) => {
               <View>
                 <Image
                   source={{ uri: product.image }}
-                  style={styles.productImage}
+                  style={MainStyle.productImage}
                 />
                 <Text>{product.name}</Text>
                 <Text>Rp.{product.price}</Text>
@@ -93,47 +94,3 @@ const Products = ({ route, navigation }: Props) => {
 };
 
 export default Products;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#f8f8f8",
-    fontFamily: "sans-serif",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  searchBar: {
-    borderWidth: 1,
-    borderRadius: 20,
-    fontSize: 12,
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  scrollView: {
-    flex: 1,
-    paddingTop: 10,
-    gap: 5,
-  },
-  gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  productImage: {
-    height: 150,
-    width: 150,
-  },
-  productBox: {
-    width: "47.5%",
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: "white",
-    cursor: "pointer",
-  },
-});

@@ -13,6 +13,7 @@ import { API_URL } from "../context/AuthContext";
 import { RootStackParamList } from "../../App";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Link, useNavigation } from "@react-navigation/native";
+import MainStyle from "../context/styles";
 
 interface Category {
   _id: string;
@@ -34,19 +35,19 @@ const Categories = () => {
     callCategories();
   }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Categories</Text>
+    <View style={MainStyle.container}>
+      <Text style={MainStyle.title}>Categories</Text>
       <TextInput
         keyboardType="web-search"
-        style={styles.searchBar}
+        style={MainStyle.searchBar}
         placeholder="Search for Categories"
       ></TextInput>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.gridContainer}>
+      <ScrollView style={MainStyle.scrollView}>
+        <View style={MainStyle.gridContainer}>
           {categories?.map((category) => (
             <Pressable
               key={category._id}
-              style={styles.productBox}
+              style={MainStyle.productBox}
               onPress={() =>
                 navigation.navigate("Products", { Category: category._id })
               }
@@ -63,47 +64,3 @@ const Categories = () => {
 };
 
 export default Categories;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#f8f8f8",
-    fontFamily: "sans-serif",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  searchBar: {
-    borderWidth: 1,
-    borderRadius: 20,
-    fontSize: 12,
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  scrollView: {
-    flex: 1,
-    paddingTop: 10,
-    gap: 5,
-  },
-  gridContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  productImage: {
-    height: 150,
-    width: 150,
-  },
-  productBox: {
-    width: "47.5%",
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: "white",
-  },
-});

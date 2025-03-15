@@ -106,6 +106,7 @@ export const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(JWT_Token);
+      console.log("Token", token);
       if (token) {
         if (isTokenExpired(token)) {
           alert("Token expired, logging out...");
