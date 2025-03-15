@@ -92,6 +92,14 @@ const MainStyle = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
   },
+
+  cartList: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 10,
+    gap: 5,
+    marginBottom: 15,
+  },
 });
 
 export default MainStyle;

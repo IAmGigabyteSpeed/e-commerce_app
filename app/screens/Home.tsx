@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from "axios";
-import { API_URL } from "../context/AuthContext";
+import { API_URL, useAuth } from "../context/AuthContext";
 import { Link, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
@@ -36,6 +36,7 @@ interface Product {
 type Props = NativeStackNavigationProp<RootStackParamList>;
 
 const Home = () => {
+  const { userInfo } = useAuth();
   const navigation = useNavigation<Props>();
   const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,7 +59,7 @@ const Home = () => {
 
   return (
     <View style={Mainstyle.container}>
-      <Text style={Mainstyle.title}>Main Menu</Text>
+      <Text style={Mainstyle.title}>Welcome back {userInfo?.name}!</Text>
       <TextInput
         keyboardType="web-search"
         style={Mainstyle.searchBar}
