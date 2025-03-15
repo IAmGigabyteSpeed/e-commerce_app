@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: any) => {
         "Authorization"
       ] = `Bearer ${result.data.token}`;
       await SecureStore.setItemAsync(JWT_Token, result.data.token);
-      getUserInfo();
+      await getUserInfo();
       return result;
     } catch (e) {
       return { error: true, msg: (e as any).response };
@@ -106,13 +106,15 @@ export const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(JWT_Token);
+      console.log(token);
       if (token) {
-        if (!isTokenExpired(token)) {
+        if (isTokenExpired(token)) {
           alert("Token expired, logging out...");
           return logout();
         }
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setAuthState({ token: token });
+        await getUserInfo();
       }
     };
     loadToken();
