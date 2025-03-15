@@ -15,6 +15,7 @@ import Product from "./app/screens/Product";
 import Products from "./app/screens/Products";
 import { Provider } from "react-redux";
 import { store } from "./app/context/reduxStore";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -43,8 +44,19 @@ const BottomTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: "black",
+        tabBarActiveTintColor: "#3498db",
         tabBarInactiveTintColor: "gray",
+        tabBarIcon: ({ color }) => {
+          let iconName: keyof typeof Ionicons.glyphMap = "home-outline";
+          if (route.name === "Home") {
+            iconName = "home-outline";
+          } else if (route.name === "Cart") {
+            iconName = "cart-outline";
+          } else if (route.name === "Transactions") {
+            iconName = "list-outline";
+          }
+          return <Ionicons name={iconName} size={24} color={color} />;
+        },
       })}
     >
       <Tab.Screen
