@@ -24,7 +24,7 @@ export type RootStackParamList = {
   App: undefined;
   Login: undefined;
   Register: undefined;
-  Transaction: { transactionId: number };
+  Transaction: { transactionId: string };
   Categories: undefined;
   Product: { ProductId: string };
   Products: { Category: string };

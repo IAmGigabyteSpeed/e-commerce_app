@@ -1,7 +1,10 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import MainStyle from "../context/styles";
 import axios from "axios";
+import { Link, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../App";
 import { API_URL, useAuth } from "../context/AuthContext";
 interface Product {
   _id: string;
@@ -29,7 +32,10 @@ interface Transcations {
   createdAt: Date;
 }
 
+type Props = NativeStackNavigationProp<RootStackParamList>;
+
 const Transactions = () => {
+  const navigation = useNavigation<Props>();
   const { userInfo, authState } = useAuth();
   const [Transactions, setTransactions] = useState<Transcations[]>([]);
   useEffect(() => {
@@ -46,30 +52,40 @@ const Transactions = () => {
       <Text>Transactions</Text>
       <ScrollView contentContainerStyle={MainStyle.scrollView}>
         {Transactions.map((Transaction) => (
-          <View
+          <Pressable
             style={{ backgroundColor: "white", padding: 12, borderRadius: 10 }}
             key={Transaction._id}
+            onPress={() =>
+              navigation.navigate("Transaction", {
+                transactionId: Transaction._id,
+              })
+            }
           >
-            <Text style={{ fontWeight: "bold" }}>
-              Transaction ID: {Transaction._id}
-            </Text>
-            <Text
-              style={{
-                color: Transaction.status === "pending" ? "blue" : "green",
-              }}
-            >
-              {Transaction.status}
-            </Text>
-            <Text style={{ fontWeight: "bold" }}>Products Purchased:</Text>
-            {Transaction.products.map((product) => (
-              <View key={product._id}>
-                <Text>
-                  {product.product.name} (x{product.quantity})
-                </Text>
-              </View>
-            ))}
-            <Text>Total Price {Transaction.totalAmount}</Text>
-          </View>
+            <View>
+              <Text style={{}}>
+                {new Date(Transaction.createdAt).toLocaleString()}
+              </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                Transaction ID: {Transaction._id}
+              </Text>
+              <Text
+                style={{
+                  color: Transaction.status === "pending" ? "blue" : "green",
+                }}
+              >
+                {Transaction.status}
+              </Text>
+              <Text style={{ fontWeight: "bold" }}>Products Purchased:</Text>
+              {Transaction.products.map((product) => (
+                <View key={product._id}>
+                  <Text>
+                    {product.product.name} (x{product.quantity})
+                  </Text>
+                </View>
+              ))}
+              <Text>Total Price {Transaction.totalAmount}</Text>
+            </View>
+          </Pressable>
         ))}
       </ScrollView>
     </View>
