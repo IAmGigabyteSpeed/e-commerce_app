@@ -63,11 +63,14 @@ const BottomTabs = () => {
         name="Home"
         component={Home}
         options={{
+          headerStyle: {
+            backgroundColor: "#72966d",
+          },
           headerRight: () => (
             <TouchableOpacity
               style={{
                 padding: 10,
-                backgroundColor: "lightblue",
+                backgroundColor: "#bc8d76",
                 borderRadius: 5,
                 marginRight: 10,
               }}
@@ -84,11 +87,14 @@ const BottomTabs = () => {
         name="Cart"
         component={Cart}
         options={{
+          headerStyle: {
+            backgroundColor: "#72966d",
+          },
           headerRight: () => (
             <TouchableOpacity
               style={{
                 padding: 10,
-                backgroundColor: "lightblue",
+                backgroundColor: "#bc8d76",
                 borderRadius: 5,
                 marginRight: 10,
               }}
@@ -105,11 +111,14 @@ const BottomTabs = () => {
         name="Transactions"
         component={Transactions}
         options={{
+          headerStyle: {
+            backgroundColor: "#72966d",
+          },
           headerRight: () => (
             <TouchableOpacity
               style={{
                 padding: 10,
-                backgroundColor: "lightblue",
+                backgroundColor: "#bc8d76",
                 borderRadius: 5,
                 marginRight: 10,
               }}
