@@ -4,14 +4,14 @@ const MainStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#e0e0e0",
     fontFamily: "sans-serif",
   },
 
   scrollView: {
-    flex: 1,
     paddingTop: 10,
     gap: 5,
+    height: "auto",
   },
 
   gridContainer: {
@@ -82,10 +82,12 @@ const MainStyle = StyleSheet.create({
 
   searchBar: {
     borderWidth: 1,
+    backgroundColor: "white",
     borderRadius: 5,
     fontSize: 12,
     paddingLeft: 5,
     paddingRight: 5,
+    marginBottom: 10,
   },
 
   title: {
