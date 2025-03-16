@@ -47,17 +47,22 @@ export const AuthProvider = ({ children }: any) => {
   const getUserInfo = async () => {
     try {
       const token: string | null = await SecureStore.getItemAsync(JWT_Token);
-      if (!token) return null;
+      if (!token) {
+        setUserInfo(null);
+        return;
+      }
 
       const decoded: JWTInfo = jwtDecode<JWTInfo>(token);
-      if (Date.now() >= decoded.exp * 1000) {
-        logout();
-        return null;
+      if (isTokenExpired(token)) {
+        await logout();
+        setUserInfo(null);
+        return;
       }
+
       setUserInfo(decoded);
     } catch (error) {
       console.error("Invalid token", error);
-      return null;
+      setUserInfo(null);
     }
   };
 
@@ -95,6 +100,7 @@ export const AuthProvider = ({ children }: any) => {
     axios.defaults.headers.common["Authorization"] = ``;
     await SecureStore.deleteItemAsync(JWT_Token);
     setAuthState({ token: null });
+    setUserInfo(null);
   };
 
   const value = {
