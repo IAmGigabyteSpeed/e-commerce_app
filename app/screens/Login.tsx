@@ -21,7 +21,7 @@ const Login = () => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.headertext}>Login</Text>
+        <Text style={[styles.headertext, { fontWeight: "bold" }]}>Login</Text>
         <View style={styles.form}>
           <TextInput
             style={styles.input}
@@ -36,8 +36,10 @@ const Login = () => {
             value={password}
             onChangeText={(text: string) => setPassword(text)}
           />
-          <Button onPress={login} title="Login" />
-          <Link screen="Register">Go to Register</Link>
+          <Button color="#72966d" onPress={login} title="Login" />
+          <Link style={{ textAlign: "center" }} screen="Register">
+            Go to Register
+          </Link>
         </View>
       </View>
     </>
