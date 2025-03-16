@@ -73,7 +73,9 @@ const BottomTabs = () => {
               }}
               onPress={onLogout}
             >
-              <Text>Sign Out</Text>
+              <Text style={{ color: "black", fontWeight: "bold" }}>
+                Sign Out
+              </Text>
             </TouchableOpacity>
           ),
         }}
@@ -92,7 +94,7 @@ const BottomTabs = () => {
               }}
               onPress={onLogout}
             >
-              <Text style={{ color: "white", fontWeight: "bold" }}>
+              <Text style={{ color: "black", fontWeight: "bold" }}>
                 Sign Out
               </Text>
             </TouchableOpacity>
@@ -113,7 +115,7 @@ const BottomTabs = () => {
               }}
               onPress={onLogout}
             >
-              <Text style={{ color: "white", fontWeight: "bold" }}>
+              <Text style={{ color: "black", fontWeight: "bold" }}>
                 Sign Out
               </Text>
             </TouchableOpacity>
