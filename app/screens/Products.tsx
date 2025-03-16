@@ -6,8 +6,9 @@ import {
   View,
   Pressable,
   Image,
+  Button,
 } from "react-native";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import axios from "axios";
@@ -37,6 +38,10 @@ interface Product {
 const Products = ({ route, navigation }: Props) => {
   const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
+  const scrollRef = useRef<ScrollView>(null);
+  const [catName, setCatName] = useState<string>("");
+
   useEffect(() => {
     const callProducts = async () => {
       const result = await axios.get(
@@ -44,6 +49,10 @@ const Products = ({ route, navigation }: Props) => {
       );
       console.log(result.data);
       setProducts(result.data);
+
+      const catResult = await axios.get(`${API_URL}/categories/${Category}`);
+      console.log(catResult.data);
+      setCatName(catResult.data.name);
     };
     callProducts();
   }, []);
@@ -56,10 +65,24 @@ const Products = ({ route, navigation }: Props) => {
     );
   }, [search, products]);
 
+  const handlePagination = (Page: number) => {
+    setPage(Page);
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+    }, 100);
+  };
+
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil((filteredProducts?.length ?? 0) / itemsPerPage);
+  const displayedItems = filteredProducts?.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
   const { Category } = route.params;
   return (
     <View style={MainStyle.container}>
-      <Text style={MainStyle.title}>Products</Text>
+      <Text style={MainStyle.title}>Products in {catName}</Text>
       <TextInput
         keyboardType="web-search"
         style={MainStyle.searchBar}
@@ -67,9 +90,9 @@ const Products = ({ route, navigation }: Props) => {
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
-      <ScrollView contentContainerStyle={MainStyle.scrollView}>
+      <ScrollView contentContainerStyle={MainStyle.scrollView} ref={scrollRef}>
         <View style={MainStyle.gridContainer}>
-          {filteredProducts.map((product) => (
+          {displayedItems.map((product) => (
             <Pressable
               style={MainStyle.productBox}
               key={product._id}
@@ -89,6 +112,23 @@ const Products = ({ route, navigation }: Props) => {
           ))}
         </View>
       </ScrollView>
+      {totalPages > 1 && (
+        <View style={MainStyle.pagination}>
+          <Button
+            title="Prev"
+            onPress={() => handlePagination(Math.max(1, page - 1))}
+            disabled={page === 1}
+          />
+          <Text>
+            Page {page} of {totalPages}
+          </Text>
+          <Button
+            title="Next"
+            onPress={() => handlePagination(Math.min(totalPages, page + 1))}
+            disabled={page === totalPages}
+          />
+        </View>
+      )}
     </View>
   );
 };

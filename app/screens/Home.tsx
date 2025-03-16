@@ -6,6 +6,7 @@ import {
   View,
   Pressable,
   Image,
+  Button,
 } from "react-native";
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import axios from "axios";
@@ -40,6 +41,9 @@ const Home = () => {
   const navigation = useNavigation<Props>();
   const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
+  const scrollRef = useRef<ScrollView>(null);
+
   useEffect(() => {
     const callProducts = async () => {
       const result = await axios.get(`${API_URL}/products/`);
@@ -57,6 +61,20 @@ const Home = () => {
     );
   }, [search, products]);
 
+  const handlePagination = (Page: number) => {
+    setPage(Page);
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+    }, 100);
+  };
+
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil((filteredProducts?.length ?? 0) / itemsPerPage);
+  const displayedItems = filteredProducts?.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
   return (
     <View style={Mainstyle.container}>
       <Text style={Mainstyle.title}>Welcome back {userInfo?.name}!</Text>
@@ -68,9 +86,9 @@ const Home = () => {
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
       <Link screen="Categories">or Search by Categories</Link>
-      <ScrollView contentContainerStyle={Mainstyle.scrollView}>
+      <ScrollView contentContainerStyle={Mainstyle.scrollView} ref={scrollRef}>
         <View style={Mainstyle.gridContainer}>
-          {filteredProducts.map((product) => (
+          {displayedItems.map((product) => (
             <Pressable
               style={Mainstyle.productBox}
               key={product._id}
@@ -92,6 +110,23 @@ const Home = () => {
           ))}
         </View>
       </ScrollView>
+      {totalPages > 1 && (
+        <View style={Mainstyle.pagination}>
+          <Button
+            title="Prev"
+            onPress={() => handlePagination(Math.max(1, page - 1))}
+            disabled={page === 1}
+          />
+          <Text>
+            Page {page} of {totalPages}
+          </Text>
+          <Button
+            title="Next"
+            onPress={() => handlePagination(Math.min(totalPages, page + 1))}
+            disabled={page === totalPages}
+          />
+        </View>
+      )}
     </View>
   );
 };
