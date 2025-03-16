@@ -99,13 +99,14 @@ const Transaction = ({ route, navigation }: Props) => {
                   {product.product.name}
                 </Text>
                 <Text>
-                  Rp.{product.product.price} x {product.quantity}
+                  Rp. {product.product.price.toLocaleString("id-ID")} x{" "}
+                  {product.quantity}
                 </Text>
               </View>
             </View>
           ))}
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-            Total Price: Rp.{Transactions?.totalAmount}
+            Total Price: Rp. {Transactions?.totalAmount.toLocaleString("id-ID")}
           </Text>
         </View>
       </ScrollView>

@@ -78,7 +78,8 @@ const Cart = () => {
               {index + 1}. {item.name}
             </Text>
             <Text>
-              Rp.{item.price} x {item.quantity} pcs = Rp.{item.totalprice}
+              Rp. {item.price.toLocaleString("id-ID")} x {item.quantity} pcs =
+              Rp. {item.totalprice.toLocaleString("id-ID")}
             </Text>
           </View>
         ))}
@@ -91,7 +92,9 @@ const Cart = () => {
       >
         <Text style={{ fontWeight: "bold" }}>
           Total: Rp.
-          {cartItem.reduce((total, item) => total + item.totalprice, 0)}
+          {cartItem
+            .reduce((total, item) => total + item.totalprice, 0)
+            .toLocaleString("id-ID")}
         </Text>
         <Pressable onPress={() => setModalVisible(true)}>
           <Text style={{ color: "blue" }}>Purchase Now</Text>

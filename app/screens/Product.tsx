@@ -80,7 +80,9 @@ const Product = ({ route }: Props) => {
           source={{ uri: product?.image }}
           style={MainStyle.productDetImage}
         />
-        <Text style={MainStyle.productPrice}>Rp.{product?.price}</Text>
+        <Text style={MainStyle.productPrice}>
+          Rp. {product?.price.toLocaleString("id-ID")}
+        </Text>
         <Text style={MainStyle.productTitle}>{product?.name}</Text>
         <Text>{product?.category.name}</Text>
         <Text style={MainStyle.productDescriptionTitle}>Description</Text>

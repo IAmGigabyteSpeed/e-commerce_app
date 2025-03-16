@@ -85,7 +85,9 @@ const Home = () => {
         value={search}
         onChangeText={(e) => setSearch(e)}
       ></TextInput>
-      <Link screen="Categories">or Search by Categories</Link>
+      <Link style={{ color: "#bc8d76" }} screen="Categories">
+        or Search by Categories
+      </Link>
       <ScrollView contentContainerStyle={Mainstyle.scrollView} ref={scrollRef}>
         <View style={Mainstyle.gridContainer}>
           {displayedItems.map((product) => (
@@ -103,7 +105,7 @@ const Home = () => {
                 />
                 <Text>{product.name}</Text>
                 <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-                  Rp.{product.price}
+                  Rp. {product.price.toLocaleString("id-ID")}
                 </Text>
               </View>
             </Pressable>

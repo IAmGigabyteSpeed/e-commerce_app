@@ -126,7 +126,9 @@ const Transactions = () => {
                   </Text>
                 </View>
               ))}
-              <Text>Total Price {Transaction.totalAmount}</Text>
+              <Text>
+                Total Price {Transaction.totalAmount.toLocaleString("id-ID")}
+              </Text>
             </View>
           </Pressable>
         ))}

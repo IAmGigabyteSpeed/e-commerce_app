@@ -106,7 +106,7 @@ const Products = ({ route, navigation }: Props) => {
                   style={MainStyle.productImage}
                 />
                 <Text>{product.name}</Text>
-                <Text>Rp.{product.price}</Text>
+                <Text>Rp.{product.price.toLocaleString("id-ID")}</Text>
               </View>
             </Pressable>
           ))}
