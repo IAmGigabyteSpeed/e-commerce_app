@@ -7,13 +7,41 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import MainStyle from "../context/styles";
 import axios from "axios";
+import { clearProducts } from "../context/cartReducer";
+import { API_URL } from "../context/AuthContext";
 
 type Props = NativeStackNavigationProp<RootStackParamList>;
 
+interface CartRequest {
+  productId: string;
+  quantity: number;
+}
+
+interface Request {
+  cart: CartRequest[];
+  totalAmount: number;
+}
+
 const Cart = () => {
   const [modalVisible, setModalVisible] = useState(false);
-
   const purchaseItem = async () => {
+    let cartBody: CartRequest[] = cartItem.map((item) => ({
+      productId: item.id,
+      quantity: item.quantity,
+    }));
+    let totalAmount = cartItem.reduce((sum, item) => sum + item.totalprice, 0);
+    let RequestBody: Request = {
+      cart: cartBody,
+      totalAmount: totalAmount,
+    };
+    try {
+      const result = await axios.post(`${API_URL}/transactions`, RequestBody);
+      console.log(result);
+      Alert.alert("Transaction Successful:", result.data.message);
+    } catch (error) {
+      console.error("Error sending transaction:", error);
+    }
+    dispatch(clearProducts());
     setModalVisible(!modalVisible);
   };
   const navigation = useNavigation<Props>();
