@@ -49,7 +49,7 @@ const Transactions = () => {
   }, [userInfo, authState]);
   return (
     <View style={MainStyle.container}>
-      <Text>Transactions</Text>
+      <Text style={MainStyle.title}>Your Transactions</Text>
       <ScrollView contentContainerStyle={MainStyle.scrollView}>
         {Transactions.map((Transaction) => (
           <Pressable
@@ -73,13 +73,13 @@ const Transactions = () => {
                   color: Transaction.status === "pending" ? "blue" : "green",
                 }}
               >
-                {Transaction.status}
+                Status: {Transaction.status}
               </Text>
               <Text style={{ fontWeight: "bold" }}>Products Purchased:</Text>
               {Transaction.products.map((product) => (
                 <View key={product._id}>
                   <Text>
-                    {product.product.name} (x{product.quantity})
+                    - {product.product.name} (x{product.quantity})
                   </Text>
                 </View>
               ))}

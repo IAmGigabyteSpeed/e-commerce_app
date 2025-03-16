@@ -91,13 +91,6 @@ const Home = () => {
             </Pressable>
           ))}
         </View>
-        <Pressable
-          onPress={() =>
-            navigation.navigate("Transaction", { transactionId: 86 })
-          }
-        >
-          <Text>Go to Transaction</Text>
-        </Pressable>
       </ScrollView>
     </View>
   );

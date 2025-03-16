@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import MainStyle from "../context/styles";
 import axios from "axios";
@@ -50,7 +50,6 @@ const Transaction = ({ route, navigation }: Props) => {
   }, [userInfo, authState]);
   return (
     <View style={MainStyle.container}>
-      <Text>Transactions {transactionId}</Text>
       <ScrollView
         contentContainerStyle={[
           MainStyle.scrollView,
@@ -58,32 +57,56 @@ const Transaction = ({ route, navigation }: Props) => {
         ]}
       >
         <View>
-          <Text style={{}}>
+          <Text style={{ fontSize: 16 }}>
             {Transactions?.createdAt
               ? new Date(Transactions.createdAt).toLocaleString()
               : "N/A"}
           </Text>
-          <Text style={{ fontWeight: "bold" }}>
-            Transaction ID: {Transactions?._id}
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+            Transaction {Transactions?._id}
           </Text>
           <Text
             style={{
               color: Transactions?.status === "pending" ? "blue" : "green",
             }}
           >
-            {Transactions?.status}
+            Status: {Transactions?.status}
           </Text>
-          <Text style={{ fontWeight: "bold" }}>Products Purchased:</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+            Products Purchased:
+          </Text>
           {Transactions?.products.map((product) => (
-            <View key={product._id}>
-              <Text>{product.product.name}</Text>
-              <Text>
-                Rp.{product.product.price} x {product.quantity} = Rp.
-                {product.product.price * product.quantity}
-              </Text>
+            <View
+              key={product._id}
+              style={{
+                padding: 10,
+                flex: 1,
+                flexDirection: "row",
+                minHeight: 96,
+              }}
+            >
+              <Image
+                source={{ uri: product.product.image }}
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}
+              />
+              <View style={{ flexShrink: 1 }}>
+                <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                  {product.product.name}
+                </Text>
+                <Text>
+                  Rp.{product.product.price} x {product.quantity}
+                </Text>
+              </View>
             </View>
           ))}
-          <Text>Total Price Rp.{Transactions?.totalAmount}</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+            Total Price: Rp.{Transactions?.totalAmount}
+          </Text>
         </View>
       </ScrollView>
     </View>
