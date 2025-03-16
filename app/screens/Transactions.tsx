@@ -1,11 +1,19 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
-import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  TextInput,
+  Button,
+} from "react-native";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import MainStyle from "../context/styles";
 import axios from "axios";
 import { Link, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
 import { API_URL, useAuth } from "../context/AuthContext";
+
 interface Product {
   _id: string;
   name: string;
@@ -37,7 +45,11 @@ type Props = NativeStackNavigationProp<RootStackParamList>;
 const Transactions = () => {
   const navigation = useNavigation<Props>();
   const { userInfo, authState } = useAuth();
+  const [search, setSearch] = useState<string>("");
   const [Transactions, setTransactions] = useState<Transcations[]>([]);
+  const [page, setPage] = useState(1);
+  const scrollRef = useRef<ScrollView>(null);
+
   useEffect(() => {
     const getTransaction = async () => {
       const result = await axios.get(`${API_URL}/transactions/${userInfo?.id}`);
@@ -45,13 +57,44 @@ const Transactions = () => {
       setTransactions(result.data);
     };
     getTransaction();
-    console.log("End");
   }, [userInfo, authState]);
+
+  const filteredTransactions = useMemo(() => {
+    if (!search) return Transactions;
+
+    return Transactions.filter((product) =>
+      product._id.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [search, Transactions]);
+
+  const handlePagination = (Page: number) => {
+    setPage(Page);
+    setTimeout(() => {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+    }, 100);
+  };
+
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(
+    (filteredTransactions?.length ?? 0) / itemsPerPage
+  );
+  const displayedItems = filteredTransactions?.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
   return (
     <View style={MainStyle.container}>
       <Text style={MainStyle.title}>Your Transactions</Text>
-      <ScrollView contentContainerStyle={MainStyle.scrollView}>
-        {Transactions.map((Transaction) => (
+      <TextInput
+        keyboardType="web-search"
+        style={MainStyle.searchBar}
+        placeholder="Search for Transactions"
+        value={search}
+        onChangeText={(e) => setSearch(e)}
+      ></TextInput>
+      <ScrollView contentContainerStyle={MainStyle.scrollView} ref={scrollRef}>
+        {displayedItems.map((Transaction) => (
           <Pressable
             style={{ backgroundColor: "white", padding: 12, borderRadius: 10 }}
             key={Transaction._id}
@@ -87,6 +130,23 @@ const Transactions = () => {
             </View>
           </Pressable>
         ))}
+        {totalPages > 1 && (
+          <View style={MainStyle.pagination}>
+            <Button
+              title="Prev"
+              onPress={() => handlePagination(Math.max(1, page - 1))}
+              disabled={page === 1}
+            />
+            <Text>
+              Page {page} of {totalPages}
+            </Text>
+            <Button
+              title="Next"
+              onPress={() => handlePagination(Math.min(totalPages, page + 1))}
+              disabled={page === totalPages}
+            />
+          </View>
+        )}
       </ScrollView>
     </View>
   );

@@ -101,6 +101,13 @@ const MainStyle = StyleSheet.create({
     gap: 5,
     marginBottom: 15,
   },
+
+  pagination: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 20,
+  },
 });
 
 export default MainStyle;
