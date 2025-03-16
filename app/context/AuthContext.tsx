@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { jwtDecode } from "jwt-decode";
+import { Alert } from "react-native";
 
 interface JWTInfo {
   id: string;
@@ -110,7 +111,7 @@ export const AuthProvider = ({ children }: any) => {
       console.log(token);
       if (token) {
         if (isTokenExpired(token)) {
-          alert("Token expired, logging out...");
+          Alert.alert("Token expired, logging out...");
           return logout();
         }
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
