@@ -84,8 +84,9 @@ export const AuthProvider = ({ children }: any) => {
       await SecureStore.setItemAsync(JWT_Token, result.data.token);
       await getUserInfo();
       return result;
-    } catch (e) {
-      return { error: true, msg: (e as any).response };
+    } catch (e: any) {
+      console.log(e.response?.data || e.message);
+      return { error: true, msg: e.response?.data || e.message };
     }
   };
 
